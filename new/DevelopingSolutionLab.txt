@@ -1,0 +1,121 @@
+Lab 2
+
+1)
+<AML>
+	<Item type="Sales Order" action="get" select="" >
+		<multiple_shipment>1</multiple_shipment>
+		<shipping_method>UPS</shipping_method>
+	</Item>
+</AML>
+
+2)
+<AML>
+	<Item type="Sales Order" action="get" select="" >
+		<or>
+			<multiple_shipment>1</multiple_shipment>
+			<shipping_method>UPS</shipping_method>
+		</or>
+	</Item>
+</AML>
+
+3>
+<AML>
+	<Item type="Sales Order" action="get" select="" >
+		<Relationships>
+			<Item type="Sales Order Customer" action="get">
+				<related_id>
+					<Item type="customer" action ="get" >
+						<city>New York</city>
+					</Item>
+			</related_id>
+			</Item>
+		</Relationships>
+	</Item>
+</AML>
+
+4)
+
+
+5)
+<AML>
+	<Item type="Sales Order" action="add">
+		<shipping_method>UPS</shipping_method>
+		<managed_by_id type="Identity">D296A5C079C44EE8B1EB9FDB6BAE99A4</managed_by_id>
+	</Item>
+</AML>
+
+6)
+<AML>
+	<Item type="Sales Order" action="add">
+		<shipping_method>UPS</shipping_method>
+		<managed_by_id type="Identity">D296A5C079C44EE8B1EB9FDB6BAE99A4</managed_by_id>
+		<Relationships>
+				<Item type="Sales Order Customer" action="add">
+					<related_id>
+						<Item type="customer" action ="get" >
+							<name>Brown Industries</name>
+						</Item>
+					</related_id>
+				</Item>
+				<Item type="Sales Order Part" action="add">
+					<related_id>
+						<Item type="part" action ="get" >
+							<item_number>C4703A</item_number>
+						</Item>
+					</related_id>
+					<quantity>1</quantity>
+				</Item>
+		</Relationships>
+	</Item>
+</AML>
+
+7)
+<AML>
+	<Item type="Sales Order" action="edit" where="multiple_shipment='1'" >
+		<shipping_method>UPS</shipping_method>
+	</Item>
+</AML>
+
+8)
+<AML>
+	<Item type="Sales Order" action="edit" where="managed_by_id='D296A5C079C44EE8B1EB9FDB6BAE99A4'">
+		<Relationships>
+				<Item type="Sales Order Remarks" action="add">
+					<comment_text>Modified by AML Administrator</comment_text>
+				</Item>
+		</Relationships>
+	</Item>
+</AML>
+
+
+Lab 4
+
+1)
+Innovator inn = this.getInnovator();
+Item itm = this.newItem("Sales Order", "get");
+itm.setProperty("multiple_shipment", "1");
+itm.setProperty("shipping_method", "UPS");
+return itm.apply();
+
+2)
+var inn = this.getInnovator();
+var itm = this.newItem("Sales Order", "get");
+itm.setProperty("multiple_shipment", "1");
+itm.setProperty("shipping_method", "UPS");
+itm.setAttribute("select", "so_number");
+return itm.apply();
+
+3) And 4)
+Innovator inn = this.getInnovator();
+string po = DateTime.Now.ToString("yyMMddhhmmss");
+Item itm = this.newItem("Sales Order", "add");
+itm.setProperty("shipping_method", "Federal Express");
+itm.setProperty("po_number", po);
+return itm.apply();
+
+5)
+Innovator inn = this.getInnovator();
+Item myItem = this.newItem("Sales Order", "edit");
+myItem.setAttribute("where","multiple_shipment=1");
+myItem.setProperty("shipping_method", "UPS");
+return myItem.apply();
